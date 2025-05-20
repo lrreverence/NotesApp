@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const config=require("./config.json");
+const config = require("./config.json");
 const mongoose = require("mongoose");
 
 mongoose.connect(config.connectionString);
@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin: "*",
+        origin: process.env.FRONTEND_URL || "*",
     })
 );
 
@@ -341,7 +341,6 @@ app.get("/search-notes", authenticateToken, async (req, res) => {
     }
 });
 
-app.listen(8000);
-
+// Instead, export the app for Vercel
 module.exports = app;
 
