@@ -3,7 +3,26 @@ require("dotenv").config();
 const config = require("./config.json");
 const mongoose = require("mongoose");
 
-mongoose.connect(config.connectionString);
+// Add connection options for better serverless compatibility
+mongoose.connect(config.connectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+}).then(() => {
+    console.log('Connected to MongoDB');
+}).catch((err) => {
+    console.error('MongoDB connection error:', err);
+});
+
+// Handle connection errors
+mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+    console.log('MongoDB disconnected');
+});
 
 const express = require('express');
 const cors = require('cors');
