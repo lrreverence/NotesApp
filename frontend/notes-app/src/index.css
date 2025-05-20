@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  @apply bg-[#202124] min-h-screen;
+}
+
+@layer components {
+  .note-card {
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  .note-card:active {
+    @apply scale-95 shadow-sm;
+  }
+}
